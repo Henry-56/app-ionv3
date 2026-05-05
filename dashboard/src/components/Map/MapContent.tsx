@@ -9,29 +9,35 @@ import HeatmapLayer from './HeatmapLayer';
 import { getContaminationDataFromSentinel2, convertToHeatmapFormat, ContaminationPoint } from '@/services/sentinelService';
 
 const juninMarketsHeatmapData: [number, number, number][] = [
-  // Mercado Modelo de Huancayo (High density) - Generamos más puntos para más intensidad
-  [-12.0658, -75.2058, 2.0], [-12.0659, -75.2057, 1.5], [-12.0657, -75.2059, 1.8], [-12.0660, -75.2055, 1.9], [-12.0655, -75.2060, 1.7],
-  [-12.0658, -75.2058, 2.0], [-12.0659, -75.2057, 1.5], [-12.0657, -75.2059, 1.8], [-12.0660, -75.2055, 1.9], [-12.0655, -75.2060, 1.7],
-  // Mercado Mayorista de Huancayo
-  [-12.0673, -75.2014, 1.9], [-12.0675, -75.2012, 1.8], [-12.0670, -75.2016, 1.9], [-12.0678, -75.2010, 1.7],
-  [-12.0673, -75.2014, 1.9], [-12.0675, -75.2012, 1.8], [-12.0670, -75.2016, 1.9], [-12.0678, -75.2010, 1.7],
-  // Mercado de Satipo
-  [-11.2530, -74.6385, 1.8], [-11.2532, -74.6383, 1.7], [-11.2528, -74.6387, 1.6],
-  [-11.2530, -74.6385, 1.8], [-11.2532, -74.6383, 1.7], [-11.2528, -74.6387, 1.6],
-  // Mercado de Tarma
-  [-11.4180, -75.6880, 1.7], [-11.4182, -75.6878, 1.6],
-  [-11.4180, -75.6880, 1.7], [-11.4182, -75.6878, 1.6],
-  // Mercado de La Oroya
-  [-11.5170, -75.8970, 1.8], [-11.5175, -75.8965, 1.7],
-  // Mercado de La Merced (Chanchamayo)
-  [-11.0545, -75.3280, 1.7], [-11.0548, -75.3278, 1.6],
-  // Mercado de Jauja
-  [-11.7760, -75.4980, 1.6], [-11.7762, -75.4982, 1.5],
-  // Mercado de Chilca
-  [-12.0830, -75.2030, 1.8], [-12.0833, -75.2028, 1.7], [-12.0828, -75.2032, 1.6],
-  // Mercado de El Tambo
-  [-12.0460, -75.2150, 1.7], [-12.0462, -75.2148, 1.6], [-12.0458, -75.2152, 1.5],
+  // 1. Distrito de Huancayo (Cercado)
+  // Mercado Modelo de Huancayo: foco más crítico de insalubridad
+  [-12.0720, -75.2055, 2.0], [-12.0721, -75.2054, 2.0], [-12.0719, -75.2056, 1.8], [-12.0722, -75.2053, 1.9], [-12.0718, -75.2057, 1.7],
+  // Mercado Mayorista (Ex Maltería): Gran emisor de residuos orgánicos
+  [-12.0782, -75.2114, 1.9], [-12.0783, -75.2113, 1.8], [-12.0781, -75.2115, 1.9],
+  // Avenida Ferrocarril (Tramo Crítico): Contaminación ambiental y sonora
+  [-12.0685, -75.2078, 1.8], [-12.0686, -75.2077, 1.7],
+
+  // 2. Distrito de El Tambo
+  // Mercado El Tambo: Acumulación de basura en puertas y calles laterales
+  [-12.0601, -75.2116, 1.7], [-12.0602, -75.2115, 1.6],
+  // Mercado Micaela Bastidas (Justicia, Paz y Vida): Depósito nocturno ilegal
+  [-12.0465, -75.2238, 1.8], [-12.0466, -75.2237, 1.7],
+  // Intersección Av. Independencia y Los Amautas: Punto de arrojo recurrente
+  [-12.0531, -75.2192, 1.6],
+
+  // 3. Distrito de Pilcomayo (Emergencia Sanitaria 2025-2026)
+  // Mercado de Pilcomayo: Acumulación por más de 5 días
+  [-12.0592, -75.2447, 2.0], [-12.0593, -75.2446, 2.0], [-12.0591, -75.2448, 1.9], [-12.0594, -75.2445, 1.8],
+  // Av. Mariscal Castilla con Jr. Libertad: Punto crítico de acumulación masiva
+  [-12.0615, -75.2421, 1.9], [-12.0616, -75.2420, 1.8],
+
+  // 4. Distrito de Chilca
+  // Mercado de Chilca: Alta generación de residuos orgánicos
+  [-12.0838, -75.2072, 1.8], [-12.0839, -75.2071, 1.7],
+  // Feria Dominical: Concentración de residuos post-feria
+  [-12.0765, -75.2091, 1.7], [-12.0766, -75.2090, 1.6],
 ];
+
 
 function MapController({ center, zoom }: { center: [number, number] | null, zoom: number }) {
   const map = useMap();
