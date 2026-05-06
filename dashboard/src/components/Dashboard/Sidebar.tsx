@@ -1,4 +1,4 @@
-import { BarChart3, Map as MapIcon, Filter, Info, Download, Navigation, ShieldAlert, Crosshair } from 'lucide-react';
+import { BarChart3, Map as MapIcon, Filter, Info, Download, Navigation, ShieldAlert, Crosshair, AlertTriangle } from 'lucide-react';
 import RankingList from './RankingList';
 import { Alerta, RankingItem } from '@/types';
 
@@ -27,6 +27,8 @@ interface SidebarProps {
 export default function Sidebar({ 
   stats, departments, provinces, selectedDept, selectedProv, onSelectDept, onSelectProv, ranking, onSelectRanking, gpsActive, onToggleGps, showHeatmap, onToggleHeatmap, showContaminationLayer, onToggleContaminationLayer
 }: SidebarProps) {
+  const porcentajeNoAtendidos = stats.total > 0 ? Math.round((stats.noAtendidos / stats.total) * 100) : 0;
+
   return (
     <aside className="w-80 bg-white border-r border-slate-200 flex flex-col h-full overflow-hidden shadow-xl">
       <div className="p-6 border-b border-slate-100">
@@ -130,6 +132,44 @@ export default function Sidebar({
             </div>
           </button>
         </section>
+        {/* Estado de Gestión */}
+        <section>
+          <h2 className="text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <AlertTriangle className="w-3.5 h-3.5" />
+            Estado de Gestión
+          </h2>
+          <div className="w-full p-4 rounded-xl border bg-white border-slate-200 shadow-sm flex items-center gap-4">
+            <div className="relative w-14 h-14 flex shrink-0 items-center justify-center">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  className="text-slate-100"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                />
+                <path
+                  className="text-red-500 transition-all duration-1000 ease-out"
+                  strokeDasharray={`${porcentajeNoAtendidos}, 100`}
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                />
+              </svg>
+              <div className="absolute flex items-center justify-center">
+                <span className="text-xs font-bold text-slate-700">{porcentajeNoAtendidos}%</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-bold text-slate-800">Puntos Críticos</p>
+              <p className="text-[10px] font-medium text-slate-500 leading-tight mt-1">
+                Residuos reportados que no han sido gestionados por las entidades.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Filtros */}
         <section>
           <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
