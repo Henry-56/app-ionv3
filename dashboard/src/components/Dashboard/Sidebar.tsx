@@ -1,4 +1,4 @@
-import { BarChart3, Map as MapIcon, Filter, Info, Download, Navigation, ShieldAlert, Crosshair, AlertTriangle } from 'lucide-react';
+import { BarChart3, Map as MapIcon, Filter, Info, Download, Navigation, ShieldAlert, Crosshair, AlertTriangle, X } from 'lucide-react';
 import RankingList from './RankingList';
 import { Alerta, RankingItem } from '@/types';
 
@@ -22,19 +22,37 @@ interface SidebarProps {
   onToggleHeatmap: (val: boolean) => void;
   showContaminationLayer: boolean;
   onToggleContaminationLayer: (val: boolean) => void;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-export default function Sidebar({ 
-  stats, departments, provinces, selectedDept, selectedProv, onSelectDept, onSelectProv, ranking, onSelectRanking, gpsActive, onToggleGps, showHeatmap, onToggleHeatmap, showContaminationLayer, onToggleContaminationLayer
+export default function Sidebar({
+  stats, departments, provinces, selectedDept, selectedProv, onSelectDept, onSelectProv, ranking, onSelectRanking, gpsActive, onToggleGps, showHeatmap, onToggleHeatmap, showContaminationLayer, onToggleContaminationLayer,
+  isOpen, onToggle
 }: SidebarProps) {
   const porcentajeNoAtendidos = stats.total > 0 ? Math.round((stats.noAtendidos / stats.total) * 100) : 0;
 
   return (
-    <aside className="w-80 bg-white border-r border-slate-200 flex flex-col h-full overflow-hidden shadow-xl">
-      <div className="p-6 border-b border-slate-100">
+    <aside className={[
+      'fixed inset-y-0 left-0 z-40 w-80 h-full',
+      'md:relative md:inset-auto md:z-auto',
+      'bg-white border-r border-slate-200 flex flex-col overflow-hidden shadow-xl',
+      'transition-transform md:transition-[width,transform] duration-300 ease-in-out',
+      isOpen
+        ? 'translate-x-0 md:w-80'
+        : '-translate-x-full md:translate-x-0 md:w-0',
+    ].join(' ')}>
+      <div className="p-6 border-b border-slate-100 shrink-0">
         <div className="flex items-center gap-2 mb-2">
-          <MapIcon className="w-6 h-6 text-emerald-600" />
-          <h1 className="text-xl font-bold text-slate-900 tracking-tight">EcoWatch Dash</h1>
+          <MapIcon className="w-6 h-6 text-emerald-600 shrink-0" />
+          <h1 className="text-xl font-bold text-slate-900 tracking-tight truncate">EcoWatch Dash</h1>
+          <button
+            onClick={onToggle}
+            className="ml-auto p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors shrink-0"
+            aria-label="Cerrar menú"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
         <p className="text-xs text-slate-500 font-medium tracking-wide">Reporta Residuos OEFA</p>
       </div>

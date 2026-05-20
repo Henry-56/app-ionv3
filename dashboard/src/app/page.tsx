@@ -8,6 +8,7 @@ import { useGeolocation } from '@/hooks/useGeolocation';
 import AlertToast from '@/components/UI/AlertToast';
 import InfoModal from '@/components/UI/InfoModal';
 import { Alerta, RankingItem } from '@/types';
+import { Menu } from 'lucide-react';
 
 export default function Dashboard() {
   const [data, setData] = useState<Alerta[]>([]);
@@ -26,6 +27,7 @@ export default function Dashboard() {
   });
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [notificationSuccess, setNotificationSuccess] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const onProximityAlert = useCallback((nearby: Alerta[]) => {
     if (nearby.length > 0 && !alertInfo.show) {
@@ -134,7 +136,16 @@ export default function Dashboard() {
 
   return (
     <main className="flex h-screen w-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
-      <AlertToast 
+      {/* Backdrop móvil: cierra el sidebar al tocar fuera */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          aria-hidden="true"
+        />
+      )}
+
+      <AlertToast
         show={alertInfo.show} 
         message={alertInfo.message} 
         onClose={() => setAlertInfo({ ...alertInfo, show: false })} 
@@ -161,8 +172,8 @@ export default function Dashboard() {
         </div>
       )}
 
-      <Sidebar 
-        stats={stats} 
+      <Sidebar
+        stats={stats}
         departments={departments}
         provinces={provinces}
         selectedDept={selectedDept}
@@ -177,32 +188,43 @@ export default function Dashboard() {
         onToggleHeatmap={(val: boolean) => {
           setShowHeatmap(val);
           if (val) {
-            setTargetCoords([-11.5, -75.0]); // Centrar en Junín aproximadamente
+            setTargetCoords([-11.5, -75.0]);
             setSelectedDept('JUNIN');
           }
         }}
         showContaminationLayer={showContaminationLayer}
         onToggleContaminationLayer={setShowContaminationLayer}
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(v => !v)}
       />
-      
-      <section className="flex-1 relative">
-        <Map 
-          data={data} 
-          selectedDept={selectedDept} 
+
+      <section className="flex-1 relative min-w-0">
+        <Map
+          data={data}
+          selectedDept={selectedDept}
           selectedProv={selectedProv}
           targetCoords={targetCoords}
           userPosition={userPosition}
           showHeatmap={showHeatmap}
           showContaminationLayer={showContaminationLayer}
         />
-        
-        {/* Overlay Superior */}
-        <div className="absolute top-6 left-6 z-10 pointer-events-none">
-          <div className="bg-white/90 backdrop-blur-md border border-slate-200 px-5 py-3 rounded-2xl shadow-xl">
-            <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+
+        {/* Botón para abrir/cerrar sidebar */}
+        <button
+          onClick={() => setSidebarOpen(v => !v)}
+          className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-md border border-slate-200 rounded-xl p-2.5 shadow-lg hover:bg-white transition-all active:scale-95"
+          aria-label="Abrir/cerrar menú"
+        >
+          <Menu className="w-5 h-5 text-slate-700" />
+        </button>
+
+        {/* Overlay localización actual */}
+        <div className="absolute top-4 left-16 z-10 pointer-events-none">
+          <div className="bg-white/90 backdrop-blur-md border border-slate-200 px-4 py-2.5 rounded-2xl shadow-xl">
+            <h2 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">
               Localización Actual
             </h2>
-            <p className="text-slate-900 font-black text-lg">
+            <p className="text-slate-900 font-black text-base leading-tight">
               {selectedProv ? `${selectedProv}, ${selectedDept}` : (selectedDept || 'Todo el Perú')}
             </p>
           </div>
