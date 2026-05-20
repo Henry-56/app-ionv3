@@ -1,6 +1,6 @@
 'use client';
 
-import { MapContainer, TileLayer, Popup, CircleMarker, GeoJSON, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, CircleMarker, GeoJSON, useMap, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import { Alerta } from '@/types';
@@ -82,12 +82,14 @@ export default function MapContent({ data, selectedDept, selectedProv, targetCoo
   };
 
   return (
-    <MapContainer 
-      center={[-9.19, -75.01]} 
-      zoom={6} 
+    <MapContainer
+      center={[-9.19, -75.01]}
+      zoom={6}
       style={{ height: '100%', width: '100%', background: '#f8fafc' }}
+      zoomControl={false}
     >
-      <MapController 
+      <ZoomControl position="bottomright" />
+      <MapController
         center={targetCoords || (userPosition ? [userPosition.lat, userPosition.lng] : null)} 
         zoom={targetCoords ? 14 : (userPosition ? 16 : 6)} 
       />

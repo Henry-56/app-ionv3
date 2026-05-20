@@ -8,7 +8,7 @@ import { useGeolocation } from '@/hooks/useGeolocation';
 import AlertToast from '@/components/UI/AlertToast';
 import InfoModal from '@/components/UI/InfoModal';
 import { Alerta, RankingItem } from '@/types';
-import { Menu } from 'lucide-react';
+import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
 
 export default function Dashboard() {
   const [data, setData] = useState<Alerta[]>([]);
@@ -213,9 +213,13 @@ export default function Dashboard() {
         <button
           onClick={() => setSidebarOpen(v => !v)}
           className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-md border border-slate-200 rounded-xl p-2.5 shadow-lg hover:bg-white transition-all active:scale-95"
-          aria-label="Abrir/cerrar menú"
+          aria-label={sidebarOpen ? 'Cerrar menú' : 'Abrir menú'}
+          title={sidebarOpen ? 'Cerrar panel' : 'Abrir panel'}
         >
-          <Menu className="w-5 h-5 text-slate-700" />
+          {sidebarOpen
+            ? <PanelLeftClose className="w-5 h-5 text-slate-700" />
+            : <PanelLeftOpen  className="w-5 h-5 text-slate-700" />
+          }
         </button>
 
         {/* Overlay localización actual */}
