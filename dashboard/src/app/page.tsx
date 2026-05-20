@@ -8,7 +8,7 @@ import { useGeolocation } from '@/hooks/useGeolocation';
 import AlertToast from '@/components/UI/AlertToast';
 import InfoModal from '@/components/UI/InfoModal';
 import { Alerta, RankingItem } from '@/types';
-import { PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+import { PanelLeftOpen, PanelLeftClose, Menu, Map as MapIcon } from 'lucide-react';
 
 export default function Dashboard() {
   const [data, setData] = useState<Alerta[]>([]);
@@ -135,7 +135,23 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans">
+    <main className="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans pt-14 md:pt-0">
+      {/* Header fijo — solo visible en móvil */}
+      <header className="fixed top-0 left-0 right-0 h-14 z-[9999] md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 flex items-center px-4 gap-3 shadow-sm">
+        <button
+          onClick={() => setSidebarOpen(v => !v)}
+          className="p-2 rounded-xl hover:bg-slate-100 transition-colors active:scale-95"
+          aria-label={sidebarOpen ? 'Cerrar panel' : 'Abrir panel'}
+        >
+          <Menu className="w-5 h-5 text-slate-700" />
+        </button>
+        <MapIcon className="w-5 h-5 text-emerald-600 shrink-0" />
+        <span className="font-bold text-slate-900 text-sm">EcoWatch Dash</span>
+        <span className="ml-auto text-[10px] text-slate-500 font-medium tracking-wide uppercase">
+          Reporta Residuos OEFA
+        </span>
+      </header>
+
       {/* Backdrop móvil: cierra el sidebar al tocar fuera */}
       {sidebarOpen && (
         <div
@@ -198,11 +214,11 @@ export default function Dashboard() {
         onToggle={() => setSidebarOpen(v => !v)}
       />
 
-      {/* Botón toggle — fixed z-[9999], siempre visible por encima de todo */}
+      {/* Botón toggle — solo desktop (móvil usa el header) */}
       <button
         onClick={() => setSidebarOpen(v => !v)}
         className={[
-          'fixed top-4 z-[9999]',
+          'hidden md:flex fixed top-4 z-[9999] items-center justify-center',
           'bg-white/90 backdrop-blur-md border border-slate-200 rounded-xl p-2.5 shadow-lg',
           'hover:bg-white transition-all duration-300 ease-in-out active:scale-95',
           sidebarOpen ? 'left-4 md:left-80' : 'left-4',

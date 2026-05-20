@@ -34,8 +34,8 @@ export default function Sidebar({
 
   return (
     <aside className={[
-      'fixed inset-y-0 left-0 z-40 w-80 h-full',
-      'md:relative md:inset-auto md:z-auto',
+      'fixed top-14 bottom-0 left-0 z-40 w-80',
+      'md:relative md:top-0 md:bottom-auto md:inset-auto md:z-auto md:h-full',
       'bg-white border-r border-slate-200 flex flex-col overflow-hidden shadow-xl',
       'transition-transform md:transition-[width,transform] duration-300 ease-in-out',
       isOpen
@@ -48,7 +48,7 @@ export default function Sidebar({
           <h1 className="text-xl font-bold text-slate-900 tracking-tight truncate">EcoWatch Dash</h1>
           <button
             onClick={onToggle}
-            className="ml-auto p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors shrink-0"
+            className="ml-auto p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors shrink-0 hidden md:block"
             aria-label="Cerrar menú"
           >
             <X className="w-4 h-4" />
