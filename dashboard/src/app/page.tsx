@@ -135,7 +135,7 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="flex h-screen w-screen bg-slate-50 text-slate-900 overflow-hidden font-sans">
+    <main className="flex h-screen w-screen bg-slate-50 text-slate-900 font-sans">
       {/* Backdrop móvil: cierra el sidebar al tocar fuera */}
       {sidebarOpen && (
         <div
@@ -198,11 +198,11 @@ export default function Dashboard() {
         onToggle={() => setSidebarOpen(v => !v)}
       />
 
-      {/* Botón toggle — fixed z-50, siempre visible por encima de todo */}
+      {/* Botón toggle — fixed z-[9999], siempre visible por encima de todo */}
       <button
         onClick={() => setSidebarOpen(v => !v)}
         className={[
-          'fixed top-4 z-50',
+          'fixed top-4 z-[9999]',
           'bg-white/90 backdrop-blur-md border border-slate-200 rounded-xl p-2.5 shadow-lg',
           'hover:bg-white transition-all duration-300 ease-in-out active:scale-95',
           sidebarOpen ? 'left-4 md:left-80' : 'left-4',
@@ -216,7 +216,7 @@ export default function Dashboard() {
         }
       </button>
 
-      <section className="flex-1 relative min-w-0">
+      <section className="flex-1 relative min-w-0 overflow-hidden">
         <Map
           data={data}
           selectedDept={selectedDept}
