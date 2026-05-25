@@ -37,10 +37,10 @@ export default function Sidebar({
       'fixed top-14 bottom-0 left-0 z-40 w-80',
       'md:relative md:top-0 md:bottom-auto md:inset-auto md:z-auto md:h-full',
       'bg-white border-r border-slate-200 flex flex-col overflow-hidden shadow-xl',
-      'transition-transform md:transition-[width,transform] duration-300 ease-in-out',
+      'sidebar-mobile md:transition-[width,transform] md:duration-300 md:ease-in-out',
       isOpen
-        ? 'translate-x-0 md:w-80'
-        : '-translate-x-full pointer-events-none md:translate-x-0 md:w-0 md:pointer-events-auto',
+        ? 'sidebar-mobile-open md:w-80'
+        : 'sidebar-mobile-closed md:translate-x-0 md:w-0 md:pointer-events-auto',
     ].join(' ')}>
       <div className="p-6 border-b border-slate-100 shrink-0">
         <div className="flex items-center gap-2 mb-2">

@@ -140,7 +140,9 @@ export default function Dashboard() {
       <header className="fixed top-0 left-0 right-0 h-14 z-[9999] md:hidden bg-white/95 backdrop-blur-md border-b border-slate-200 flex items-center px-4 gap-3 shadow-sm">
         <button
           onClick={() => setSidebarOpen(v => !v)}
+          onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); setSidebarOpen(v => !v); }}
           className="p-2 rounded-xl hover:bg-slate-100 transition-colors active:scale-95"
+          style={{ touchAction: 'manipulation' }}
           aria-label={sidebarOpen ? 'Cerrar panel' : 'Abrir panel'}
         >
           <Menu className="w-5 h-5 text-slate-700" />
