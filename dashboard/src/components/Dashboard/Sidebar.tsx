@@ -40,7 +40,7 @@ export default function Sidebar({
       'transition-transform md:transition-[width,transform] duration-300 ease-in-out',
       isOpen
         ? 'translate-x-0 md:w-80'
-        : '-translate-x-full md:translate-x-0 md:w-0',
+        : '-translate-x-full pointer-events-none md:translate-x-0 md:w-0 md:pointer-events-auto',
     ].join(' ')}>
       <div className="p-6 border-b border-slate-100 shrink-0">
         <div className="flex items-center gap-2 mb-2">

@@ -156,7 +156,7 @@ export default function Dashboard() {
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          className="fixed top-14 inset-x-0 bottom-0 bg-black/40 z-30 md:hidden"
           aria-hidden="true"
         />
       )}
