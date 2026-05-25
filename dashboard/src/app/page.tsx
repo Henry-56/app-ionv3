@@ -232,7 +232,7 @@ export default function Dashboard() {
         }
       </button>
 
-      <section className="flex-1 relative min-w-0 overflow-hidden">
+      <section className={`flex-1 relative min-w-0 overflow-hidden${sidebarOpen ? ' pointer-events-none md:pointer-events-auto' : ''}`}>
         <Map
           data={data}
           selectedDept={selectedDept}
